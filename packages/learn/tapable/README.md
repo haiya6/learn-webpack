@@ -62,7 +62,7 @@ tap2 zhangsan 15
 
 ## SyncWaterfallHook
 
-这是一个同步钩子，但在事件处理函数中若出现了返回值，则会将返回值作为新的参数值传递给后续的处理函数，这是一个简单使用的示例：
+这是一个同步钩子，若在事件处理函数中若出现了返回值，则会将返回值作为新的参数值传递给后续的处理函数，这是一个简单使用的示例：
 
 ```js
 import { SyncWaterfallHook } from 'tapable'
@@ -250,8 +250,7 @@ catch tap3 error
 
 ## AsyncParallelBailHook
 
-这是一个异步并行的钩子，它会按照事件注册顺序，以第一个返回非 undefined 的值或错误作为结果进入后面流程
-
+这是一个异步并行保险的钩子，它会按照事件注册顺序，以第一个返回非 undefined 的值或错误作为结果进入后面流程
 
 有三种事件注册的方式：
 
@@ -412,7 +411,7 @@ tap3 lishi
 then [ undefined ]
 ```
 
-输出结果有点乱，是因为是事件循环的特点，但依然满足在上一个事件函数执行完成后再执行下一个事件处理函数的特点
+输出结果有点乱，是因为是事件循环的结果，但依然满足在上一个事件函数执行完成后再执行下一个事件处理函数的特点
 
 这是一个有错误发生的使用示例：
 
@@ -459,7 +458,7 @@ catch tap error
 
 ## AsyncSeriesBailHook
 
-这是一个异步串行保险钩子，按时间处理函数注册顺序依次执行，并在有结果返回或错误时中止
+这是一个异步串行保险钩子，按事件处理函数注册顺序依次执行，并在有结果返回或错误时中止
 
 有三种事件注册的方式：
 
@@ -485,7 +484,7 @@ hook.tap('tap1', name => {
 
 hook.tapAsync('tap2', (name, callback) => {
   console.log('tap2', name)
-  setTimeout(() => callback(null), 0)
+  setTimeout(() => callback(null, 'tap2 result'), 0)
 })
 
 hook.tapPromise('tap3', name => {
