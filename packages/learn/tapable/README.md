@@ -559,8 +559,202 @@ tap2 出现了错误，中止执行
 
 ## AsyncSeriesLoopHook
 
-TODO
+这是一个异步串行循环钩子，会按照事件注册顺序依次执行，若在事件处理函数中若出现了返回值，则会重头重新执行所有的事件处理函数，直至所有的处理函数都没有返回值
+
+有三种事件注册的方式：
+
++ tap
++ tapAsync
++ tapPromise
+
+有两种事件触发的方式：
+
++ callAsync
++ promise
+
+这是一个没有错误发生的使用示例：
+
+```js
+import { AsyncSeriesLoopHook } from 'tapable'
+
+const hook = new AsyncSeriesLoopHook(['name'])
+
+hook.tap('tap1', name => {
+  console.log('tap1', name)
+})
+
+hook.tapAsync('tap2', (name, callback) => {
+  console.log('tap2', name)
+  setTimeout(() => callback(null, Math.random() < 0.3 ? undefined : 'tap2 result'), 0);
+})
+
+hook.tapPromise('tap3', name => {
+  console.log('tap3', name)
+  return Promise.resolve(Math.random() < 0.3 ? undefined : 'tap3 reuslt')
+})
+
+hook.callAsync('zhangsan', (err, ...args) => {
+  console.log('callAsync error', err)
+  console.log('callAsync result', args)
+})
+
+// hook.promise('lishi').then((...args) => console.log('then', args)).catch(err => console.log('catch', err))
+```
+
+Output:
+
+```
+tap1 zhangsan
+tap2 zhangsan
+tap3 zhangsan
+tap1 zhangsan
+tap2 zhangsan
+tap1 zhangsan
+tap2 zhangsan
+tap3 zhangsan
+tap1 zhangsan
+tap2 zhangsan
+tap3 zhangsan
+callAsync error undefined
+callAsync result []
+```
+
+只要在事件处理函数中有非 undefined 返回值，则会一直重复从头开始执行
+
+这是一个有错误发生的使用示例：
+
+```js
+import { AsyncSeriesLoopHook } from 'tapable'
+
+const hook = new AsyncSeriesLoopHook(['name'])
+
+hook.tap('tap1', name => {
+  console.log('tap1', name)
+})
+
+hook.tapAsync('tap2', (name, callback) => {
+  console.log('tap2', name)
+  setTimeout(() => callback(Math.random() < 0.7 ? null : 'tap2 error', 'tap result'), 0);
+})
+
+hook.tapPromise('tap3', name => {
+  console.log('tap3', name)
+  return Promise.resolve(Math.random() < 0.3 ? undefined : 'tap3 reuslt')
+})
+
+hook.callAsync('zhangsan', (err, ...args) => {
+  console.log('callAsync error', err)
+  console.log('callAsync result', args)
+})
+
+// hook.promise('lishi').then((...args) => console.log('then', args)).catch(err => console.log('catch', err))
+```
+
+Output:
+
+```
+tap1 zhangsan
+tap2 zhangsan
+tap1 zhangsan
+tap2 zhangsan
+tap1 zhangsan
+tap2 zhangsan
+tap1 zhangsan
+tap2 zhangsan
+callAsync error tap2 error
+callAsync result []
+```
+
+同理在有返回值的时候会重复重头开始执行，但在出现错误后中止执行
 
 ## AsyncSeriesWaterfallHook
 
-TODO
+这是一个异步串行的钩子，会按照事件注册的顺序依次执行，若在事件处理函数中若出现了返回值，则会将返回值作为新的参数值传递给后续的处理函数
+
+有三种事件注册的方式：
+
++ tap
++ tapAsync
++ tapPromise
+
+有两种事件触发的方式：
+
++ callAsync
++ promise
+
+这是一个没有错误发生的使用示例：
+
+```js
+import { AsyncSeriesWaterfallHook } from 'tapable'
+
+const hook = new AsyncSeriesWaterfallHook(['name'])
+
+hook.tap('tap1', name => {
+  console.log('tap1', name)
+})
+
+hook.tapAsync('tap2', (name, callback) => {
+  console.log('tap2', name)
+  setTimeout(() => callback(null, 'lishi'), 0)
+})
+
+hook.tapPromise('tap3', name => {
+  console.log('tap3', name)
+  return Promise.resolve()
+})
+
+hook.callAsync('zhangsan', (err, ...args) => {
+  console.log('callAsync error', err)
+  console.log('callAsync result', args)
+})
+
+// hook.promise('lishi').then((...args) => console.log('then', args)).catch(err => console.log('catch', err))
+```
+
+Output: 
+
+```
+tap1 zhangsan
+tap2 zhangsan
+tap3 lishi
+callAsync error null
+callAsync result [ 'lishi' ]
+```
+
+这是一个有错误发生的使用示例：
+
+```js
+import { AsyncSeriesWaterfallHook } from 'tapable'
+
+const hook = new AsyncSeriesWaterfallHook(['name'])
+
+hook.tap('tap1', name => {
+  console.log('tap1', name)
+})
+
+hook.tapAsync('tap2', (name, callback) => {
+  console.log('tap2', name)
+  setTimeout(() => callback('tap2 error', 'lishi'), 0)
+})
+
+hook.tapPromise('tap3', name => {
+  console.log('tap3', name)
+  return Promise.resolve()
+})
+
+hook.callAsync('zhangsan', (err, ...args) => {
+  console.log('callAsync error', err)
+  console.log('callAsync result', args)
+})
+
+// hook.promise('lishi').then((...args) => console.log('then', args)).catch(err => console.log('catch', err))
+```
+
+Output:
+
+```
+tap1 zhangsan
+tap2 zhangsan
+callAsync error tap2 error
+callAsync result []
+```
