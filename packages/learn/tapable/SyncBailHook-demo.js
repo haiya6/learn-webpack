@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { SyncBailHook } from 'tapable'
 
 const hook = new SyncBailHook(['name', 'age'])

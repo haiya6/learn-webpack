@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { SyncLoopHook } from 'tapable'
 
 const hook = new SyncLoopHook(['name', 'age'])

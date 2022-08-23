@@ -1,8 +1,9 @@
+/* eslint-disable no-console */
 import { AsyncSeriesWaterfallHook } from 'tapable'
 
 const hook = new AsyncSeriesWaterfallHook(['name'])
 
-hook.tap('tap1', name => {
+hook.tap('tap1', (name) => {
   console.log('tap1', name)
 })
 
@@ -11,7 +12,7 @@ hook.tapAsync('tap2', (name, callback) => {
   setTimeout(() => callback('tap2 error', 'lishi'), 0)
 })
 
-hook.tapPromise('tap3', name => {
+hook.tapPromise('tap3', (name) => {
   console.log('tap3', name)
   return Promise.resolve()
 })

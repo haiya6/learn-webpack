@@ -23,6 +23,8 @@ module.exports = {
     'dot-notation': 'off',
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': ['error'],
-    'import/prefer-default-export': 'off'
+    'import/prefer-default-export': 'off',
+    'import/no-extraneous-dependencies': 'off',
+    'max-len': 'off'
   }
 }

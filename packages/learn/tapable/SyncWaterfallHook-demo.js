@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { SyncWaterfallHook } from 'tapable'
 
 // 需要指定形参
