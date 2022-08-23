@@ -20,5 +20,9 @@
     "rollup-plugin-typescript2": "^0.33.0",
     "tslib": "^2.4.0",
     "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "loader-runner": "^4.3.0",
+    "tapable": "^2.2.1"
   }
 }

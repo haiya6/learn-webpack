@@ -10,11 +10,16 @@ importers:
       eslint: ^7.32.0 || ^8.2.0
       eslint-config-airbnb-base: ^15.0.0
       eslint-plugin-import: ^2.25.2
+      loader-runner: ^4.3.0
       rollup: ^2.78.1
       rollup-plugin-dts: ^4.2.2
       rollup-plugin-typescript2: ^0.33.0
+      tapable: ^2.2.1
       tslib: ^2.4.0
       typescript: ^4.7.4
+    dependencies:
+      loader-runner: 4.3.0
+      tapable: 2.2.1
     devDependencies:
       '@types/node': 18.7.8
       '@typescript-eslint/eslint-plugin': 5.33.1_vsoshirnpb7xw6mr7xomgfas2i
@@ -29,10 +34,7 @@ importers:
       typescript: 4.7.4
 
   packages/learn:
-    specifiers:
-      tapable: ^2.2.1
-    dependencies:
-      tapable: 2.2.1
+    specifiers: {}
 
   packages/loader-runner:
     specifiers: {}
@@ -1185,6 +1187,11 @@ packages:
       prelude-ls: 1.2.1
       type-check: 0.4.0
     dev: true
+
+  /loader-runner/4.3.0:
+    resolution: {integrity: sha512-3R/1M+yS3j5ou80Me59j7F9IMs4PXs3VqRrm0TU3AbKPxlmpoY1TNscJV/oGJXo8qCatFGTfDbY6W6ipGOYXfg==}
+    engines: {node: '>=6.11.5'}
+    dev: false
 
   /locate-path/5.0.0:
     resolution: {integrity: sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==}
