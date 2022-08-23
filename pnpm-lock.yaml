@@ -36,15 +36,10 @@ importers:
   packages/learn:
     specifiers: {}
 
-  packages/loader-runner:
-    specifiers: {}
-
   packages/my-webpack:
     specifiers:
-      '@my-webpack/loader-runner': 1.0.0
       '@my-webpack/shared': 1.0.0
     dependencies:
-      '@my-webpack/loader-runner': link:../loader-runner
       '@my-webpack/shared': link:../shared
 
   packages/shared:

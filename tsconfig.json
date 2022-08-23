@@ -9,7 +9,6 @@
     "skipLibCheck": true,
     "moduleResolution": "node",
     "paths": {
-      "@my-webpack/loader-runner": ["packages/loader-runner/src"],
       "@my-webpack/shared": ["packages/shared/src"]
     }
   }
