@@ -11,7 +11,7 @@ interface RunLoaderOptions {
   loaders: Loader[]
 }
 
-export async function runLoader(options: RunLoaderOptions) {
+export async function runLoaders(options: RunLoaderOptions) {
   const { resrouce, loaders } = options
 
   let index = 0

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import { runLoader, Loader } from '../src'
+import { runLoaders, Loader } from '../src'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -10,7 +10,7 @@ describe('runLoader', () => {
     const loader1: Loader = (content) => `${content}1`
     const loader2: Loader = (content) => `${content}2`
 
-    const result = await runLoader({
+    const result = await runLoaders({
       resrouce: path.resolve(dirname, './input.txt'),
       loaders: [
         loader1,
@@ -27,7 +27,7 @@ describe('runLoader', () => {
     const loader2: Loader = (content) => `${content}2`
     loader2.pitch = () => 'loader2 picth'
 
-    const result = await runLoader({
+    const result = await runLoaders({
       resrouce: path.resolve(dirname, './input.txt'),
       loaders: [
         loader1,
