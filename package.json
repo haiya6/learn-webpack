@@ -6,6 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "lint": "eslint . --ext .ts,.js --fix",
+    "dev": "rollup -c rollup.config.ts --watch",
     "build": "rollup -c rollup.config.ts",
     "test": "vitest",
     "prepare": "husky install"
