@@ -1,8 +1,0 @@
-{
-  "name": "my-webpack",
-  "version": "1.0.0",
-  "dependencies": {
-    "@my-webpack/shared": "1.0.0",
-    "@my-webpack/loader-runner": "1.0.0"
-  }
-}
